@@ -3,6 +3,7 @@ import { sequelize } from './utils/database';
 import './models/products';
 import { AddProduct } from './handlers/addProduct';
 import { GetAllProduct } from './handlers/getAllProduct';
+import { GetProduct } from './handlers/getProduct';
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.get('/api', (_, res) => {
 app.post('/api/add-product', AddProduct);
 /** get all the product */
 app.get('/api/products', GetAllProduct);
+/** get single product */
+app.get('/api/products/:productId', GetProduct);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, async () => {
