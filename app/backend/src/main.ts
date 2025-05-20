@@ -1,0 +1,34 @@
+import express from 'express';
+import { sequelize } from './utils/database';
+import './models/products';
+import { AddProduct } from './handlers/addProduct';
+import { GetAllProduct } from './handlers/getAllProduct';
+
+const app = express();
+
+app.use(express.json());
+
+app.get('/api', (_, res) => {
+  res.json({ message: 'Hello Eumentis API' });
+});
+
+/** Add new product */
+app.post('/api/add-product', AddProduct);
+/** get all the product */
+app.get('/api/products', GetAllProduct);
+
+const port = process.env.PORT || 3333;
+const server = app.listen(port, async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connected to PostgreSQL successfully.');
+
+    await sequelize.sync();
+    console.log('Synced all the models.');
+
+    console.log(`Listening at http://localhost:${port}/api`);
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+});
+server.on('error', console.error);
