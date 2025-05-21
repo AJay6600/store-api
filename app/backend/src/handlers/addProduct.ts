@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ErrorMessageResponseType } from '../utils/types/ErrorMessageResponseType';
 import { Product } from '../models/products';
 import { ProductDetailsType } from '../utils/types/ProductDetailsType';
+import { AuthenticatedRequest } from '../utils/types/AuthenticatedRequest';
 
 type AddProductRequestBodyType = Pick<
   ProductDetailsType,
@@ -9,7 +10,7 @@ type AddProductRequestBodyType = Pick<
 >;
 
 export const AddProduct = async (
-  request: Request<unknown, unknown, AddProductRequestBodyType>,
+  request: AuthenticatedRequest<unknown, unknown, AddProductRequestBodyType>,
   response: Response<ProductDetailsType | ErrorMessageResponseType>
 ) => {
   const { title, price, imageUrl, description } = request.body;
@@ -20,6 +21,7 @@ export const AddProduct = async (
       price,
       imageUrl,
       description,
+      userId: request.userId,
     });
 
     response.status(200).json(createProductResult.dataValues);

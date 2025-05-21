@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response, Request } from 'express';
 import { ErrorMessageResponseType } from '../utils/types/ErrorMessageResponseType';
 import { Product } from '../models/products';
 import { ProductDetailsType } from '../utils/types/ProductDetailsType';

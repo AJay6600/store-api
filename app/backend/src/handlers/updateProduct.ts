@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ErrorMessageResponseType } from '../utils/types/ErrorMessageResponseType';
 import { Product } from '../models/products';
 import { ProductDetailsType } from '../utils/types/ProductDetailsType';
+import { AuthenticatedRequest } from '../utils/types/AuthenticatedRequest';
 
 type UpdateProductRequestBodyType = Pick<
   ProductDetailsType,
@@ -9,7 +10,7 @@ type UpdateProductRequestBodyType = Pick<
 >;
 
 export const UpdateProduct = async (
-  request: Request<
+  request: AuthenticatedRequest<
     { productId: number },
     unknown,
     UpdateProductRequestBodyType
@@ -35,6 +36,10 @@ export const UpdateProduct = async (
     productToUpdate.set('price', price);
     productToUpdate.set('imageUrl', imageUrl);
     productToUpdate.set('description', description);
+
+    if (productToUpdate.dataValues.userId !== request.userId) {
+      productToUpdate.set('description', description);
+    }
 
     const updateProductResult = await productToUpdate.save();
 

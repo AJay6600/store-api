@@ -14,6 +14,14 @@ export const GetProduct = async (
       where: { id: productId },
     });
 
+    if (
+      getProductResult &&
+      Array.isArray(getProductResult) &&
+      getProductResult.length === 0
+    ) {
+      throw new Error('Product not found');
+    }
+
     response.status(200).json(getProductResult[0].dataValues);
   } catch (err) {
     response.status(400).json({ message: err.message });

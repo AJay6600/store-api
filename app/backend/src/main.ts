@@ -9,6 +9,7 @@ import { UpdateProduct } from './handlers/updateProduct';
 import { DeleteProduct } from './handlers/deleteProduct';
 import { SignUp } from './handlers/signUp';
 import dotenv from 'dotenv';
+import { auth } from './middleware/auth';
 
 dotenv.config();
 
@@ -21,15 +22,15 @@ app.get('/api', (_, res) => {
 });
 
 /** Add new product */
-app.post('/api/add-product', AddProduct);
+app.post('/api/add-product', auth, AddProduct);
 /** get all the product */
 app.get('/api/products', GetAllProduct);
 /** get single product */
 app.get('/api/products/:productId', GetProduct);
 /** Update the product  */
-app.patch('/api/product/:productId', UpdateProduct);
+app.patch('/api/product/:productId', auth, UpdateProduct);
 /** Delete the product */
-app.delete('/api/product/:productId', DeleteProduct);
+app.delete('/api/product/:productId', auth, DeleteProduct);
 
 /** sign up */
 app.post('/api/user/sign-up', SignUp);
