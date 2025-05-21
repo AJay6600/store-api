@@ -7,6 +7,10 @@ import { GetAllProduct } from './handlers/getAllProduct';
 import { GetProduct } from './handlers/getProduct';
 import { UpdateProduct } from './handlers/updateProduct';
 import { DeleteProduct } from './handlers/deleteProduct';
+import { SignUp } from './handlers/signUp';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -26,6 +30,9 @@ app.get('/api/products/:productId', GetProduct);
 app.patch('/api/product/:productId', UpdateProduct);
 /** Delete the product */
 app.delete('/api/product/:productId', DeleteProduct);
+
+/** sign up */
+app.post('/api/user/sign-up', SignUp);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, async () => {
