@@ -1,6 +1,7 @@
 import express from 'express';
 import { sequelize } from './utils/database';
-import './models/products';
+import { Product } from './models/products';
+import { User } from './models/user';
 import { AddProduct } from './handlers/addProduct';
 import { GetAllProduct } from './handlers/getAllProduct';
 import { GetProduct } from './handlers/getProduct';
@@ -31,6 +32,12 @@ const server = app.listen(port, async () => {
   try {
     await sequelize.authenticate();
     console.log('Connected to PostgreSQL successfully.');
+
+    User.hasMany(Product);
+    Product.belongsTo(User, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
 
     await sequelize.sync();
     console.log('Synced all the models.');
