@@ -5,6 +5,7 @@ import { AddProduct } from './handlers/addProduct';
 import { GetAllProduct } from './handlers/getAllProduct';
 import { GetProduct } from './handlers/getProduct';
 import { UpdateProduct } from './handlers/updateProduct';
+import { DeleteProduct } from './handlers/deleteProduct';
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.get('/api/products', GetAllProduct);
 app.get('/api/products/:productId', GetProduct);
 /** Update the product  */
 app.patch('/api/product/:productId', UpdateProduct);
+/** Delete the product */
+app.delete('/api/product/:productId', DeleteProduct);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, async () => {
