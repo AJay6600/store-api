@@ -1,9 +1,10 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ErrorMessageResponseType } from '../utils/types/ErrorMessageResponseType';
 import { Product } from '../models/products';
+import { AuthenticatedRequest } from '../utils/types/AuthenticatedRequest';
 
 export const DeleteProduct = async (
-  request: Request<{ productId: number }, unknown, unknown>,
+  request: AuthenticatedRequest<{ productId: number }, unknown, unknown>,
   response: Response<ErrorMessageResponseType>
 ) => {
   const productId = request.params.productId;
