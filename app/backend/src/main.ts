@@ -13,6 +13,7 @@ import { auth } from './middleware/auth';
 import { Cart } from './models/cart';
 import { CartItem } from './models/cartItem';
 import { AddProductToCart } from './handlers/addProductToCart';
+import { GetAllProductFromCart } from './handlers/getAllProductFromCart';
 
 dotenv.config();
 
@@ -52,6 +53,8 @@ app.post('/api/user/sign-up', SignUp);
 
 /** Add product to cart */
 app.post('/api/cart/add-product', auth, AddProductToCart);
+/** Get All product from cart */
+app.get('/api/cart/products', auth, GetAllProductFromCart);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, async () => {
