@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 import { auth } from './middleware/auth';
 import { Cart } from './models/cart';
 import { CartItem } from './models/cartItem';
+import { AddProductToCart } from './handlers/addProductToCart';
 
 dotenv.config();
 
@@ -48,6 +49,9 @@ app.delete('/api/product/:productId', auth, DeleteProduct);
 
 /** sign up */
 app.post('/api/user/sign-up', SignUp);
+
+/** Add product to cart */
+app.post('/api/cart/add-product', auth, AddProductToCart);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, async () => {
