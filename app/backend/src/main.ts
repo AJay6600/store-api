@@ -29,10 +29,21 @@ Product.belongsTo(User, {
 });
 
 User.hasOne(Cart);
-Cart.belongsTo(User);
+Cart.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 
-Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem });
+Cart.belongsToMany(Product, {
+  through: CartItem,
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+Product.belongsToMany(Cart, {
+  through: CartItem,
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 
 app.get('/api', (_, res) => {
   res.json({ message: 'Hello Eumentis API' });
