@@ -3,6 +3,7 @@ import { ErrorMessageResponseType } from '../utils/types/ErrorMessageResponseTyp
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/user';
+import { Cart } from '../models/cart';
 
 type SignUpRequestBodyType = {
   email: string;
@@ -46,6 +47,13 @@ export const SignUp = async (
     });
 
     const userId = createUserResult.dataValues.id;
+
+    /** Create the cart for new user */
+    if (userId) {
+      await Cart.create({
+        userId,
+      });
+    }
 
     /** Create jwt token */
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
