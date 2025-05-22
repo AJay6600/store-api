@@ -14,6 +14,7 @@ import { Cart } from './models/cart';
 import { CartItem } from './models/cartItem';
 import { AddProductToCart } from './handlers/addProductToCart';
 import { GetAllProductFromCart } from './handlers/getAllProductFromCart';
+import { RemoveProductFromCart } from './handlers/removeProductFromCart';
 
 dotenv.config();
 
@@ -55,6 +56,8 @@ app.post('/api/user/sign-up', SignUp);
 app.post('/api/cart/add-product', auth, AddProductToCart);
 /** Get All product from cart */
 app.get('/api/cart/products', auth, GetAllProductFromCart);
+/** Remove the product from cart */
+app.delete('/api/cart/product/:productId', auth, RemoveProductFromCart);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, async () => {
