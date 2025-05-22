@@ -10,12 +10,26 @@ import { DeleteProduct } from './handlers/deleteProduct';
 import { SignUp } from './handlers/signUp';
 import dotenv from 'dotenv';
 import { auth } from './middleware/auth';
+import { Cart } from './models/cart';
+import { CartItem } from './models/cartItem';
 
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
+
+User.hasMany(Product);
+Product.belongsTo(User, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+
+User.hasOne(Cart);
+Cart.belongsTo(User);
+
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 app.get('/api', (_, res) => {
   res.json({ message: 'Hello Eumentis API' });
@@ -40,12 +54,6 @@ const server = app.listen(port, async () => {
   try {
     await sequelize.authenticate();
     console.log('Connected to PostgreSQL successfully.');
-
-    User.hasMany(Product);
-    Product.belongsTo(User, {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
 
     await sequelize.sync();
     console.log('Synced all the models.');
